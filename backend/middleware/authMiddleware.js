@@ -1,0 +1,29 @@
+const express = require("express");
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+dotenv.config();
+
+async function authenticate(req, res, next) {
+    try {
+        const authHeader = req.headers.authorization;
+
+        if (!authHeader) {
+            return res.status(401).json({ message: 'no token' });
+        }
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        req.user = user;
+        next();
+
+    } catch (error) {
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+}
