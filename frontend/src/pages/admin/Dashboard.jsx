@@ -3,13 +3,8 @@ import { FaUserFriends, FaShoppingBag, FaMoneyBillWave, FaChartBar, FaExclamatio
 import { formatPrice } from '../../utils/helpers';
 
 const AdminDashboard = () => {
-    // Mock Stats
-    const stats = [
-        { label: 'Total Revenue', value: formatPrice(1250450), icon: <FaMoneyBillWave />, color: 'bg-green-100 text-green-600' },
-        { label: 'Total Orders', value: '45,231', icon: <FaShoppingBag />, color: 'bg-blue-100 text-blue-600' },
-        { label: 'Active Users', value: '12,543', icon: <FaUserFriends />, color: 'bg-purple-100 text-purple-600' },
-        { label: 'Pending Approvals', value: '56', icon: <FaExclamationTriangle />, color: 'bg-yellow-100 text-yellow-600' },
-    ];
+    // TODO: Link with backend - fetch admin stats from API
+    const stats = [];
 
     return (
         <div className="bg-gray-50 min-h-screen p-8">

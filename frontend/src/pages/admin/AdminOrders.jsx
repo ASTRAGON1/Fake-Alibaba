@@ -2,14 +2,8 @@ import { useState } from 'react';
 import { formatPrice, formatDate, getStatusColor } from '../../utils/helpers';
 
 const AdminOrders = () => {
-    // Mock Orders Data
-    const orders = [
-        { id: 'ORD-001', customer: 'John Doe', seller: 'Tech Store', date: '2026-02-07', total: 129.99, status: 'Pending' },
-        { id: 'ORD-002', customer: 'Jane Smith', seller: 'Fashion Hub', date: '2026-02-06', total: 89.99, status: 'Shipped' },
-        { id: 'ORD-003', customer: 'Bob Johnson', seller: 'Tech Store', date: '2026-02-05', total: 199.99, status: 'Delivered' },
-        { id: 'ORD-004', customer: 'Alice Williams', seller: 'Home Depot', date: '2026-02-04', total: 450.00, status: 'Processing' },
-        { id: 'ORD-005', customer: 'Mike Brown', seller: 'Sports Gear', date: '2026-02-03', total: 55.00, status: 'Cancelled' },
-    ];
+    // TODO: Link with backend - fetch orders from API
+    const orders = [];
 
     return (
         <div className="bg-gray-50 min-h-screen p-8">

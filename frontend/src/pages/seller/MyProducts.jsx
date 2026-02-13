@@ -5,18 +5,11 @@ import Button from '../../components/Button';
 import { formatPrice } from '../../utils/helpers';
 
 const MyProducts = () => {
-    // Mock Products
-    const [products, setProducts] = useState([
-        { id: 1, title: 'Wireless Headphones', price: 129.99, stock: 45, status: 'Active', category: 'Electronics' },
-        { id: 2, title: 'Bluetooth Speaker', price: 89.99, stock: 12, status: 'Active', category: 'Electronics' },
-        { id: 3, title: 'Men\'s Leather Jacket', price: 199.99, stock: 0, status: 'Out of Stock', category: 'Clothing' },
-        { id: 4, title: 'Smart Watch Series 5', price: 299.99, stock: 15, status: 'Draft', category: 'Electronics' },
-    ]);
+    // TODO: Link with backend - fetch seller products from API
+    const [products, setProducts] = useState([]);
 
     const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
-            setProducts(products.filter(p => p.id !== id));
-        }
+        // TODO: Link with backend - DELETE /api/products/:id
     };
 
     return (

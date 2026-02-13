@@ -4,20 +4,11 @@ import { formatPrice } from '../../utils/helpers';
 import Button from '../../components/Button';
 
 const SellerDashboard = () => {
-    // Mock Stats
-    const stats = [
-        { label: 'Total Sales', value: formatPrice(15240), icon: <FaMoneyBillWave />, color: 'bg-green-100 text-green-600' },
-        { label: 'Total Orders', value: '1,245', icon: <FaShoppingBag />, color: 'bg-blue-100 text-blue-600' },
-        { label: 'Products', value: '45', icon: <FaBox />, color: 'bg-orange-100 text-orange-600' },
-        { label: 'Growth', value: '+12.5%', icon: <FaChartLine />, color: 'bg-purple-100 text-purple-600' },
-    ];
+    // TODO: Link with backend - fetch seller stats from API
+    const stats = [];
 
-    // Mock Recent Orders
-    const recentOrders = [
-        { id: 'ORD-001', product: 'Wireless Headphones', customer: 'John Doe', date: '2026-02-07', amount: 129.99, status: 'Pending' },
-        { id: 'ORD-002', product: 'Bluetooth Speaker', customer: 'Jane Smith', date: '2026-02-06', amount: 89.99, status: 'Shipped' },
-        { id: 'ORD-003', product: 'Smart Watch', customer: 'Bob Johnson', date: '2026-02-05', amount: 199.99, status: 'Delivered' },
-    ];
+    // TODO: Link with backend - fetch recent orders from API
+    const recentOrders = [];
 
     return (
         <div className="bg-gray-50 min-h-screen p-8">

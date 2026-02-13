@@ -2,18 +2,11 @@ import { useState } from 'react';
 import { formatPrice, formatDate, getStatusColor } from '../../utils/helpers';
 
 const SellerOrders = () => {
-    // Mock Seller Orders
-    const [orders, setOrders] = useState([
-        { id: 'ORD-001', customer: 'John Doe', date: '2026-02-07', total: 129.99, status: 'Pending', items: 1 },
-        { id: 'ORD-002', customer: 'Jane Smith', date: '2026-02-06', total: 89.99, status: 'Shipped', items: 2 },
-        { id: 'ORD-003', customer: 'Bob Johnson', date: '2026-02-05', total: 199.99, status: 'Delivered', items: 1 },
-        { id: 'ORD-004', customer: 'Alice Williams', date: '2026-02-04', total: 450.00, status: 'Processing', items: 5 },
-    ]);
+    // TODO: Link with backend - fetch seller orders from API
+    const [orders, setOrders] = useState([]);
 
     const handleStatusChange = (id, newStatus) => {
-        setOrders(orders.map(order =>
-            order.id === id ? { ...order, status: newStatus } : order
-        ));
+        // TODO: Link with backend - PUT /api/orders/:id/status
     };
 
     return (

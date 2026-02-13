@@ -4,17 +4,11 @@ import Rating from './Rating';
 const FilterSidebar = ({ filters, onFilterChange }) => {
     const [priceRange, setPriceRange] = useState(filters.priceRange || [0, 1000]);
 
-    // Mock Categories
-    const categories = [
-        { id: 'electronics', name: 'Consumer Electronics' },
-        { id: 'clothing', name: 'Apparel & Accessories' },
-        { id: 'home', name: 'Home & Garden' },
-        { id: 'beauty', name: 'Beauty & Personal Care' },
-        { id: 'sports', name: 'Sports & Entertainment' },
-    ];
+    // TODO: Link with backend - fetch categories from API
+    const categories = [];
 
     const handleCategoryChange = (categoryId) => {
-        // Toggle logic or single select logic
+        // TODO: Link with backend - apply category filter
         onFilterChange({ ...filters, category: categoryId });
     };
 
@@ -25,6 +19,7 @@ const FilterSidebar = ({ filters, onFilterChange }) => {
     };
 
     const applyPriceFilter = () => {
+        // TODO: Link with backend - apply price range filter
         onFilterChange({ ...filters, priceRange });
     };
 

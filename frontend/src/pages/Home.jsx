@@ -3,27 +3,11 @@ import { FaArrowRight, FaShippingFast, FaUndo, FaHeadset, FaShieldAlt } from 're
 import ProductCard from '../components/ProductCard';
 
 const Home = () => {
-    // Mock Featured Products
-    const featuredProducts = Array(8).fill(null).map((_, i) => ({
-        id: i + 1,
-        title: `Premium Wireless Headphones ${i + 1}`,
-        price: 129.99 + (i * 10),
-        originalPrice: 199.99 + (i * 10),
-        image: `https://picsum.photos/seed/${i + 100}/300/300`,
-        rating: 4.5,
-        numReviews: 120 + (i * 5),
-        moq: 10,
-        discount: 15
-    }));
+    // TODO: Link with backend - fetch featured products from API
+    const featuredProducts = [];
 
-    const categories = [
-        { id: 'electronics', name: 'Consumer Electronics', image: 'https://picsum.photos/seed/elec/100/100' },
-        { id: 'clothing', name: 'Apparel & Accessories', image: 'https://picsum.photos/seed/cloth/100/100' },
-        { id: 'home', name: 'Home & Garden', image: 'https://picsum.photos/seed/home/100/100' },
-        { id: 'beauty', name: 'Beauty & Personal Care', image: 'https://picsum.photos/seed/beauty/100/100' },
-        { id: 'sports', name: 'Sports & Entertainment', image: 'https://picsum.photos/seed/sports/100/100' },
-        { id: 'machinery', name: 'Machinery', image: 'https://picsum.photos/seed/machine/100/100' },
-    ];
+    // TODO: Link with backend - fetch categories from API
+    const categories = [];
 
     return (
         <div className="bg-gray-50 pb-12">

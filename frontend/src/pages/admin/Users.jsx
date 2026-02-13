@@ -3,23 +3,15 @@ import { FaEdit, FaTrash, FaUserShield, FaBan } from 'react-icons/fa';
 import Button from '../../components/Button';
 
 const AdminUsers = () => {
-    // Mock Users
-    const [users, setUsers] = useState([
-        { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Buyer', status: 'Active', joined: '2025-12-01' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Seller', status: 'Active', joined: '2026-01-15' },
-        { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Buyer', status: 'Suspended', joined: '2025-11-20' },
-        { id: 4, name: 'Admin User', email: 'admin@example.com', role: 'Admin', status: 'Active', joined: '2025-10-05' },
-    ]);
+    // TODO: Link with backend - fetch users from API
+    const [users, setUsers] = useState([]);
 
     const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this user?')) {
-            setUsers(users.filter(u => u.id !== id));
-        }
+        // TODO: Link with backend - DELETE /api/admin/users/:id
     };
 
     const handleStatusChange = (id, currentStatus) => {
-        const newStatus = currentStatus === 'Active' ? 'Suspended' : 'Active';
-        setUsers(users.map(u => u.id === id ? { ...u, status: newStatus } : u));
+        // TODO: Link with backend - PUT /api/admin/users/:id/status
     };
 
     return (

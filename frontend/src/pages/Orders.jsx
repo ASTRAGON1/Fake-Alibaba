@@ -3,13 +3,8 @@ import { FaBoxOpen, FaEye } from 'react-icons/fa';
 import { formatPrice, formatDate, getStatusColor } from '../utils/helpers';
 
 const Orders = () => {
-    // Mock Orders Data
-    const orders = [
-        { id: 'ORD-2026-001', date: '2026-02-01', total: 429.50, status: 'Delivered', itemCount: 3 },
-        { id: 'ORD-2026-002', date: '2026-01-25', total: 125.00, status: 'Shipped', itemCount: 1 },
-        { id: 'ORD-2026-003', date: '2026-01-14', total: 899.99, status: 'Processing', itemCount: 5 },
-        { id: 'ORD-2025-098', date: '2025-12-20', total: 54.00, status: 'Cancelled', itemCount: 2 },
-    ];
+    // TODO: Link with backend - fetch user orders from API
+    const orders = [];
 
     return (
         <div className="bg-gray-50 min-h-screen py-8">
