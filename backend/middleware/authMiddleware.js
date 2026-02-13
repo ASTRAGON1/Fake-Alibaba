@@ -1,10 +1,8 @@
 const express = require("express");
-const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-dotenv.config();
+const User = require('../models/User');
 
-async function authenticate(req, res, next) {
+const protect = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
 
@@ -27,3 +25,5 @@ async function authenticate(req, res, next) {
         return res.status(401).json({ message: 'Invalid token' });
     }
 }
+
+module.exports = { protect };
