@@ -94,7 +94,7 @@ const Navbar = () => {
                                 <div className="relative group">
                                     <button className="flex items-center space-x-2 text-gray-700 hover:text-primary focus:outline-none">
                                         <img
-                                            src={user.avatar || 'https://ui-avatars.com/api/?name=User'}
+                                            src={user.avatar || ''}
                                             alt="Profile"
                                             className="h-8 w-8 rounded-full border border-gray-200"
                                         />

@@ -77,22 +77,7 @@ const SellerDashboard = () => {
                     <div className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-lg font-bold text-gray-900 mb-6">Notifications</h2>
                         <div className="space-y-4">
-                            <div className="flex items-start p-3 bg-blue-50 rounded-md border border-blue-100">
-                                <div className="text-blue-500 mt-1 mr-3"><FaShoppingBag /></div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-gray-800">New Order Recieved</h4>
-                                    <p className="text-xs text-gray-600 mt-1">You have received a new order #ORD-004 from Alice.</p>
-                                    <span className="text-xs text-gray-400 block mt-2">2 mins ago</span>
-                                </div>
-                            </div>
-                            <div className="flex items-start p-3 bg-yellow-50 rounded-md border border-yellow-100">
-                                <div className="text-yellow-600 mt-1 mr-3"><FaBox /></div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-gray-800">Low Stock Alert</h4>
-                                    <p className="text-xs text-gray-600 mt-1">Product "Wireless Earbuds" is running low on stock (5 left).</p>
-                                    <span className="text-xs text-gray-400 block mt-2">1 hour ago</span>
-                                </div>
-                            </div>
+                            {/* TODO: Link with backend - fetch notifications from API */}
                         </div>
                     </div>
                 </div>

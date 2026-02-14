@@ -29,27 +29,16 @@ const Products = () => {
     }, [location.search]);
 
     useEffect(() => {
-        // Mock API call
+        // TODO: Link with backend - fetch products from API based on filters and pagination
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                // Imitate network delay
-                await new Promise(resolve => setTimeout(resolve, 800));
+                // TODO: Replace with actual API call
+                // const response = await fetch(`/api/products?page=${currentPage}&category=${filters.category}...`);
+                // const data = await response.json();
+                // setProducts(data.products);
 
-                // Mock data similar to Home page but more
-                const mockProducts = Array(12).fill(null).map((_, i) => ({
-                    id: (currentPage - 1) * 12 + i + 1,
-                    title: `Professional Grade Tool Set ${i + 1}`,
-                    price: 49.99 + (i * 5),
-                    originalPrice: 89.99 + (i * 5),
-                    image: `https://picsum.photos/seed/${(currentPage - 1) * 12 + i + 200}/300/300`,
-                    rating: 4 + (i % 2) * 0.5,
-                    numReviews: 50 + i * 2,
-                    moq: 5,
-                    discount: i % 3 === 0 ? 20 : 0
-                }));
-
-                setProducts(mockProducts);
+                setProducts([]);
             } catch (error) {
                 console.error('Failed to fetch products', error);
             } finally {

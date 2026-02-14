@@ -30,11 +30,22 @@ const AddProduct = () => {
         e.preventDefault();
         setLoading(true);
 
-        // Simulate API Call
-        setTimeout(() => {
+        try {
+            // TODO: Link with backend - POST /api/products
+            // const formDataToSend = new FormData();
+            // Object.keys(formData).forEach(key => {
+            //     formDataToSend.append(key, formData[key]);
+            // });
+            // const response = await fetch('/api/products', {
+            //     method: 'POST',
+            //     body: formDataToSend
+            // });
+            // navigate('/seller/products');
+        } catch (error) {
+            console.error('Failed to create product', error);
+        } finally {
             setLoading(false);
-            navigate('/seller/products');
-        }, 1500);
+        }
     };
 
     return (

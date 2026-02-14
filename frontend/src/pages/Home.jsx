@@ -32,8 +32,9 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="md:w-1/2">
+                            {/* TODO: Replace with actual hero image */}
                             <img
-                                src="https://picsum.photos/seed/hero/600/400"
+                                src=""
                                 alt="Global Trade"
                                 className="rounded-lg shadow-xl w-full"
                             />

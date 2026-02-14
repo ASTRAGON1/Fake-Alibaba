@@ -8,40 +8,7 @@ import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import { formatPrice } from '../utils/helpers';
 
-// Mock Product Data
-const MOCK_PRODUCT = {
-    id: 1,
-    title: "Industrial Grade Wireless Headphones with Noise Cancellation",
-    price: 129.99,
-    originalPrice: 199.99,
-    description: "Experience high-fidelity audio with our premium wireless headphones. Featuring active noise cancellation, 30-hour battery life, and comfortable memory foam ear cushions. Perfect for bulk orders and corporate gifts.",
-    images: [
-        "https://picsum.photos/seed/head1/600/600",
-        "https://picsum.photos/seed/head2/600/600",
-        "https://picsum.photos/seed/head3/600/600",
-        "https://picsum.photos/seed/head4/600/600"
-    ],
-    rating: 4.8,
-    numReviews: 324,
-    stock: 1500,
-    moq: 10,
-    sku: "HP-WL-001",
-    brand: "TechSound",
-    specifications: [
-        { name: "Connectivity", value: "Bluetooth 5.2" },
-        { name: "Battery Life", value: "30 Hours" },
-        { name: "Charging Time", value: "2 Hours" },
-        { name: "Driver Size", value: "40mm" },
-        { name: "Weight", value: "250g" }
-    ],
-    seller: {
-        id: 101,
-        name: "Global Tech Suppliers Ltd.",
-        rating: 4.9,
-        years: 5
-    }
-};
-
+// TODO: Link with backend - fetch product data from API
 const ProductDetail = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
@@ -54,13 +21,25 @@ const ProductDetail = () => {
     const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
     useEffect(() => {
-        // Simulate API fetch
-        setLoading(true);
-        setTimeout(() => {
-            setProduct({ ...MOCK_PRODUCT, id: parseInt(id) || 1 });
-            setLoading(false);
-            setQuantity(MOCK_PRODUCT.moq);
-        }, 600);
+        // TODO: Link with backend - fetch product details from API
+        const fetchProduct = async () => {
+            setLoading(true);
+            try {
+                // TODO: Replace with actual API call
+                // const response = await fetch(`/api/products/${id}`);
+                // const data = await response.json();
+                // setProduct(data);
+                // setQuantity(data.moq || 1);
+
+                setProduct(null);
+            } catch (error) {
+                console.error('Failed to fetch product', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
     }, [id]);
 
     if (loading) return <Loader fullScreen />;
@@ -286,23 +265,8 @@ const ProductDetail = () => {
                                     <h3 className="text-lg font-bold">Customer Reviews</h3>
                                     <Button variant="outline" size="small">Write a Review</Button>
                                 </div>
-                                {/* Mock Reviews */}
+                                {/* TODO: Link with backend - fetch product reviews from API */}
                                 <div className="space-y-6">
-                                    {[1, 2, 3].map((review) => (
-                                        <div key={review} className="border-b border-gray-100 pb-6 last:border-0">
-                                            <div className="flex items-center mb-2">
-                                                <img src={`https://ui-avatars.com/api/?name=User+${review}`} alt="User" className="w-10 h-10 rounded-full mr-3" />
-                                                <div>
-                                                    <h5 className="font-bold text-gray-900 text-sm">John Doe</h5>
-                                                    <Rating value={5} />
-                                                </div>
-                                                <span className="ml-auto text-sm text-gray-400">2 days ago</span>
-                                            </div>
-                                            <p className="text-gray-600 text-sm">
-                                                Great product! The quality exceeded my expectations. Shipping was fast and packaging was secure. Will definitely order again.
-                                            </p>
-                                        </div>
-                                    ))}
                                 </div>
                             </div>
                         )}

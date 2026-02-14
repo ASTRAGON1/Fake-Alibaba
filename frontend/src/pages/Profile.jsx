@@ -24,10 +24,14 @@ const Profile = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            await updateProfile(formData);
-            setMessage({ type: 'success', text: 'Profile updated successfully!' });
+            // TODO: Link with backend - PUT /api/users/profile
+            // const response = await fetch('/api/users/profile', {
+            //     method: 'PUT',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // });
+            // await updateProfile(formData);
+            // setMessage({ type: 'success', text: 'Profile updated successfully!' });
         } catch (error) {
             setMessage({ type: 'error', text: 'Failed to update profile.' });
         } finally {
@@ -54,7 +58,7 @@ const Profile = () => {
                         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                             <div className="p-6 text-center border-b border-gray-100">
                                 <img
-                                    src={user?.avatar || 'https://ui-avatars.com/api/?name=User'}
+                                    src={user?.avatar || ''}
                                     alt="Profile"
                                     className="w-20 h-20 rounded-full mx-auto mb-3 border border-gray-200"
                                 />

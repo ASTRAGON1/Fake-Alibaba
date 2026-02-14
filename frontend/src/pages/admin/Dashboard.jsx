@@ -54,27 +54,7 @@ const AdminDashboard = () => {
                     <div className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-lg font-bold text-gray-900 mb-6">Recent Activity</h2>
                         <div className="space-y-4">
-                            <div className="flex items-start p-3 border-b border-gray-50 last:border-0">
-                                <div className="w-2 h-2 rounded-full bg-green-500 mt-2 mr-3"></div>
-                                <div>
-                                    <p className="text-sm text-gray-800">New seller registration: <span className="font-bold">Global Tech Industries</span></p>
-                                    <span className="text-xs text-gray-400">10 mins ago</span>
-                                </div>
-                            </div>
-                            <div className="flex items-start p-3 border-b border-gray-50 last:border-0">
-                                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3"></div>
-                                <div>
-                                    <p className="text-sm text-gray-800">Order #ORD-998 marked as delivered</p>
-                                    <span className="text-xs text-gray-400">45 mins ago</span>
-                                </div>
-                            </div>
-                            <div className="flex items-start p-3 border-b border-gray-50 last:border-0">
-                                <div className="w-2 h-2 rounded-full bg-red-500 mt-2 mr-3"></div>
-                                <div>
-                                    <p className="text-sm text-gray-800">Reported product: "Counterfeit Luxury Watch"</p>
-                                    <span className="text-xs text-gray-400">2 hours ago</span>
-                                </div>
-                            </div>
+                            {/* TODO: Link with backend - fetch recent activity from API */}
                         </div>
                     </div>
                 </div>

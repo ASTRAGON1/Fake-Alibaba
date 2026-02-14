@@ -35,12 +35,21 @@ const Checkout = () => {
 
     const handlePlaceOrder = async () => {
         setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            // TODO: Link with backend - POST /api/orders
+            // const response = await fetch('/api/orders', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ ...formData, items: cartItems })
+            // });
+            // const data = await response.json();
+            // clearCart();
+            // navigate(`/orders/${data.orderId}`);
+        } catch (error) {
+            console.error('Failed to place order', error);
+        } finally {
             setLoading(false);
-            clearCart();
-            navigate('/orders'); // Actually should go to order success page
-        }, 2000);
+        }
     };
 
     const nextStep = () => setStep(prev => prev + 1);

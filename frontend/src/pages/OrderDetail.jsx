@@ -6,28 +6,8 @@ import Button from '../components/Button';
 const OrderDetail = () => {
     const { id } = useParams();
 
-    // Mock Order Details - In real app, fetch by ID
-    const order = {
-        id: id || 'ORD-2026-001',
-        date: '2026-02-01',
-        status: 'Delivered',
-        paymentMethod: 'Visa ending in 4242',
-        shippingAddress: {
-            name: 'John Doe',
-            address: '123 Business Rd',
-            city: 'Commerce City',
-            postalCode: '12345',
-            country: 'USA'
-        },
-        items: [
-            { id: 1, title: 'Industrial Grade Wireless Headphones', price: 129.50, quantity: 2, image: 'https://picsum.photos/seed/head1/100/100' },
-            { id: 2, title: 'Premium Mechanical Keyboard', price: 170.50, quantity: 1, image: 'https://picsum.photos/seed/key1/100/100' }
-        ],
-        subtotal: 429.50,
-        shipping: 0,
-        tax: 0,
-        total: 429.50
-    };
+    // TODO: Link with backend - fetch order details from API
+    const order = null;
 
     return (
         <div className="bg-gray-50 min-h-screen py-8">
@@ -68,9 +48,8 @@ const OrderDetail = () => {
                             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3 flex items-center">
                                 <FaTruck className="mr-2 text-gray-400" /> Shipment Details
                             </h3>
-                            <p className="text-gray-600 text-sm mb-1">Carrier: FedEx Express</p>
-                            <p className="text-gray-600 text-sm mb-1">Tracking #: <span className="text-primary cursor-pointer hover:underline">1234567890</span></p>
-                            <p className="text-gray-600 text-sm">Payment: {order.paymentMethod}</p>
+                            {/* TODO: Link with backend - fetch shipment details from API */}
+                            <p className="text-gray-600 text-sm">Payment: {order?.paymentMethod}</p>
                         </div>
                     </div>
 

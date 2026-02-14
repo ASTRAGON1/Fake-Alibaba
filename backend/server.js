@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan('dev'));
-app.use('/api/', limiter);
+app.use('/api/', limiter); //this limits the number of requests to the server
 
 // routes here:
 app.use('/api/users', userRoutes);
