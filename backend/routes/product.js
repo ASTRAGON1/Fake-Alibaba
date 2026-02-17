@@ -9,11 +9,11 @@ const {
     deleteProduct
 } = require('../controllers/productController');
 // Public route - anyone can view products
-router.get('/api/products', getProducts);
-router.get('/api/products/:id', getProductById);
+router.get('/', getProducts);
+router.get('/:id', getProductById);
 // Protected routes - only logged-in sellers can create/update/delete
-router.post('/api/products', protect, createProduct);
-router.put('/api/products/:id', protect, updateProduct);
-router.delete('/api/products/:id', protect, deleteProduct);
+router.post('/', protect, createProduct);
+router.put('/:id', protect, updateProduct);
+router.delete('/:id', protect, deleteProduct);
 
 module.exports = router;

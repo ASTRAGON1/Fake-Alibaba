@@ -9,9 +9,9 @@ const {
 } = require('../controllers/cartController');
 
 // Protected routes - only logged-in buyers can access carts
-router.get('api/carts', protect, getCarts);
-router.post('api/carts', protect, addToCart);
-router.put('api/carts/item/:id', protect, updateQuantity);
-router.delete('api/carts/item/:id', protect, removeFromCart);
+router.get('/', protect, getCarts);
+router.post('/', protect, addToCart);
+router.put('/item/:id', protect, updateQuantity);
+router.delete('/item/:id', protect, removeFromCart);
 
 module.exports = router;

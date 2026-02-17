@@ -32,8 +32,26 @@ const Signup = () => {
             if (formData.password !== formData.confirmPassword) {
                 throw new Error('Passwords do not match');
             }
+            const response = await fetch('http://localhost:5000/api/users/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    role: formData.role
+                }),
+            });
+            const data = await response.json();
 
-            await signup(formData);
+            if (!response.ok) {
+                throw new Error(data.message || 'Signup failed');
+            }
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
             navigate('/');
         } catch (err) {
             setError(err.message || 'Failed to create account');
@@ -105,8 +123,8 @@ const Signup = () => {
                                 <button
                                     type="button"
                                     className={`py-3 px-4 border rounded-md text-sm font-medium flex items-center justify-center ${formData.role === 'buyer'
-                                            ? 'border-primary bg-primary/5 text-primary'
-                                            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                        ? 'border-primary bg-primary/5 text-primary'
+                                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                                         }`}
                                     onClick={() => setFormData({ ...formData, role: 'buyer' })}
                                 >
@@ -115,8 +133,8 @@ const Signup = () => {
                                 <button
                                     type="button"
                                     className={`py-3 px-4 border rounded-md text-sm font-medium flex items-center justify-center ${formData.role === 'seller'
-                                            ? 'border-primary bg-primary/5 text-primary'
-                                            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                        ? 'border-primary bg-primary/5 text-primary'
+                                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                                         }`}
                                     onClick={() => setFormData({ ...formData, role: 'seller' })}
                                 >

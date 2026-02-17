@@ -6,7 +6,7 @@ const {
 } = require('../controllers/orderController');
 
 // Protected route - only logged-in buyers can place orders
-router.post('api/orders', protect, placeOrder);
+router.post('/', protect, placeOrder);
 
 
 module.exports = router;

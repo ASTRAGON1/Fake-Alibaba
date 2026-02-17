@@ -17,21 +17,34 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //prevent the app from refresh 
         setIsLoading(true);
         setError('');
 
         try {
-            if (!email || !password) {
-                throw new Error('Please fill in all fields');
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to login')
             }
 
-            await login(email, password);
-            navigate(from, { replace: true });
-        } catch (err) {
-            setError(err.message || 'Failed to login');
+            localStorage.setItem('token', data.token); //storing the token into the local storage
+
+            localStorage.setItem('user', JSON.stringify(data.user)); //storing the use data into the local storage
+            navigate('/');
+        } catch (error) {
+            setError(error.message); //catches and send the error back to the user
         } finally {
-            setIsLoading(false);
+            setLoading(false); //hide the loading spinner since we dont need it anymore
         }
     };
 

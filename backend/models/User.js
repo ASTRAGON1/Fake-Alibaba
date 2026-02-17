@@ -30,6 +30,7 @@ userSchema.pre('save', async function (next) {
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    next(); // Call next() to continue the save operation
 });
 
 // Compare password method

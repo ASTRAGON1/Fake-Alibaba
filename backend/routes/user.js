@@ -10,12 +10,13 @@ const {
 } = require('../controllers/userController');
 
 // Public routes - anyone can register or login
-router.post('/api/users/register', registerUser);
-router.post('api/users/login', loginUser);
+router.post('/register', registerUser);
+router.post('/signup', registerUser);
+router.post('/login', loginUser);
 
 // Protected routes - only logged-in users can access profile
-router.post('api/users/logout', logoutUser);
-router.get('api/users/profile', protect, getUserProfile);
-router.put('/api/users/profile', protect, updateProfile);
+router.post('/logout', logoutUser);
+router.get('/profile', protect, getUserProfile);
+router.put('/profile', protect, updateProfile);
 
 module.exports = router;
