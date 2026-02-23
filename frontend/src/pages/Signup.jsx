@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Toast from '../components/Toast';
@@ -15,7 +14,6 @@ const Signup = () => {
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { signup } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -52,7 +50,12 @@ const Signup = () => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-            navigate('/');
+            // Redirect based on role
+            if (data.user.role === 'seller') {
+                navigate('/seller/dashboard');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             setError(err.message || 'Failed to create account');
         } finally {

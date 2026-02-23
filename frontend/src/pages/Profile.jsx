@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Toast from '../components/Toast';
 
 const Profile = () => {
-    const { user, updateProfile } = useAuth();
+    const userStr = localStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
     const [formData, setFormData] = useState({
         name: user?.name || '',
         email: user?.email || '',
-        phone: user?.phone || '',
-        company: user?.company || '',
+        phoneNumber: user?.phoneNumber || '',
+        companyName: user?.companyName || '',
         address: user?.address || '',
     });
     const [loading, setLoading] = useState(false);
@@ -24,14 +24,19 @@ const Profile = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            // TODO: Link with backend - PUT /api/users/profile
-            // const response = await fetch('/api/users/profile', {
-            //     method: 'PUT',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData)
-            // });
-            // await updateProfile(formData);
-            // setMessage({ type: 'success', text: 'Profile updated successfully!' });
+
+            const response = await fetch('http://localhost:5000/api/users/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to update profile');
+            } else {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                setMessage({ type: 'success', text: 'Profile updated successfully!' });
+            }
         } catch (error) {
             setMessage({ type: 'error', text: 'Failed to update profile.' });
         } finally {
@@ -97,15 +102,15 @@ const Profile = () => {
                                     />
                                     <Input
                                         label="Phone Number"
-                                        name="phone"
-                                        value={formData.phone}
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
                                         onChange={handleChange}
                                         placeholder="+1 234 567 8900"
                                     />
                                     <Input
                                         label="Company Name"
-                                        name="company"
-                                        value={formData.company}
+                                        name="companyName"
+                                        value={formData.companyName}
                                         onChange={handleChange}
                                         placeholder="Optional"
                                     />

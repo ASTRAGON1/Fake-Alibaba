@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { FaSearch, FaShoppingCart, FaHeart, FaUser, FaBars, FaTimes, FaSignOutAlt, FaStore, FaCog } from 'react-icons/fa';
 import Button from './Button';
 
 const Navbar = () => {
-    const { user, isAuthenticated, logout } = useAuth();
+    const userStr = localStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
+    const isAuthenticated = !!localStorage.getItem('token') && !!user;
     const { cartItems } = useCart();
     const { wishlistItems } = useWishlist();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/login');
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -21,6 +29,12 @@ const Navbar = () => {
             setIsMenuOpen(false);
         }
     };
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login');
+        }
+    }, [user, navigate]);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -64,53 +78,67 @@ const Navbar = () => {
                                     </Link>
                                 )}
 
-                                {user.role === 'admin' && (
-                                    <Link to="/admin/dashboard" className="flex flex-col items-center text-gray-600 hover:text-primary">
-                                        <FaCog className="text-xl mb-1" />
-                                        <span className="text-xs">Admin</span>
-                                    </Link>
+                                {user.role === 'buyer' && (
+                                    <>
+                                        <Link to="/wishlist" className="flex flex-col items-center text-gray-600 hover:text-primary relative">
+                                            <FaHeart className="text-xl mb-1" />
+                                            <span className="text-xs">Wishlist</span>
+                                            {wishlistItems.length > 0 && (
+                                                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                                                    {wishlistItems.length}
+                                                </span>
+                                            )}
+                                        </Link>
+
+                                        <Link to="/cart" className="flex flex-col items-center text-gray-600 hover:text-primary relative">
+                                            <FaShoppingCart className="text-xl mb-1" />
+                                            <span className="text-xs">Cart</span>
+                                            {cartItems.length > 0 && (
+                                                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                                                    {cartItems.length}
+                                                </span>
+                                            )}
+                                        </Link>
+                                    </>
                                 )}
 
-                                <Link to="/wishlist" className="flex flex-col items-center text-gray-600 hover:text-primary relative">
-                                    <FaHeart className="text-xl mb-1" />
-                                    <span className="text-xs">Wishlist</span>
-                                    {wishlistItems.length > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                            {wishlistItems.length}
-                                        </span>
-                                    )}
-                                </Link>
-
-                                <Link to="/cart" className="flex flex-col items-center text-gray-600 hover:text-primary relative">
-                                    <FaShoppingCart className="text-xl mb-1" />
-                                    <span className="text-xs">Cart</span>
-                                    {cartItems.length > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                            {cartItems.length}
-                                        </span>
-                                    )}
-                                </Link>
-
-                                <div className="relative group">
-                                    <button className="flex items-center space-x-2 text-gray-700 hover:text-primary focus:outline-none">
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                                        className="flex items-center space-x-2 text-gray-700 hover:text-primary focus:outline-none"
+                                    >
                                         <img
-                                            src={user.avatar || ''}
+                                            src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`}
                                             alt="Profile"
                                             className="h-8 w-8 rounded-full border border-gray-200"
                                         />
-                                        <span className="text-sm font-medium">{user.name.split(' ')[0]}</span>
+                                        <span className="text-sm font-medium">{user?.name?.split(' ')[0] ?? 'User'}</span>
                                     </button>
                                     {/* Dropdown Menu */}
-                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block border border-gray-100">
-                                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</Link>
-                                        <Link to="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</Link>
-                                        <button
-                                            onClick={logout}
-                                            className="block w-full text-left px-4 py-2 text-sm text-danger hover:bg-gray-100 flex items-center"
-                                        >
-                                            <FaSignOutAlt className="mr-2" /> Sign Out
-                                        </button>
-                                    </div>
+                                    {isProfileMenuOpen && (
+                                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100">
+                                            <Link
+                                                to="/profile"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsProfileMenuOpen(false)}
+                                            >
+                                                My Profile
+                                            </Link>
+                                            <Link
+                                                to="/orders"
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsProfileMenuOpen(false)}
+                                            >
+                                                My Orders
+                                            </Link>
+                                            <button
+                                                onClick={() => { logout(); setIsProfileMenuOpen(false); }}
+                                                className="block w-full text-left px-4 py-2 text-sm text-danger hover:bg-gray-100 flex items-center"
+                                            >
+                                                <FaSignOutAlt className="mr-2" /> Sign Out
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         ) : (
@@ -169,10 +197,6 @@ const Navbar = () => {
 
                                     {user.role === 'seller' && (
                                         <Link to="/seller/dashboard" className="text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>Seller Dashboard</Link>
-                                    )}
-
-                                    {user.role === 'admin' && (
-                                        <Link to="/admin/dashboard" className="text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>Admin Dashboard</Link>
                                     )}
 
                                     <button onClick={() => { logout(); setIsMenuOpen(false); }} className="text-danger font-medium py-2 text-left flex items-center">

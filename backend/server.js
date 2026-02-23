@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
 const userRoutes = require('./routes/user');
-const adminRoutes = require('./routes/admin');
 const productRoutes = require('./routes/product');
 const categoryRoutes = require('./routes/category');
 const cartRoutes = require('./routes/cart');
@@ -37,7 +36,6 @@ app.use('/api/', limiter); //this limits the number of requests to the server
 
 // routes here:
 app.use('/api/users', userRoutes);
-app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/carts', cartRoutes);

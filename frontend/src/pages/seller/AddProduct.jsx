@@ -31,16 +31,20 @@ const AddProduct = () => {
         setLoading(true);
 
         try {
-            // TODO: Link with backend - POST /api/products
-            // const formDataToSend = new FormData();
-            // Object.keys(formData).forEach(key => {
-            //     formDataToSend.append(key, formData[key]);
-            // });
-            // const response = await fetch('/api/products', {
-            //     method: 'POST',
-            //     body: formDataToSend
-            // });
-            // navigate('/seller/products');
+            const response = await fetch('http://localhost:5000/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+            navigate('/seller/products');
+
         } catch (error) {
             console.error('Failed to create product', error);
         } finally {

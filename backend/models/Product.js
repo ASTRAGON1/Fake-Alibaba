@@ -13,6 +13,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
+
     stock: {
         type: Number,
         default: 0
@@ -20,6 +25,11 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String,
         default: ''
+    },
+    moq: {
+        type: Number,
+        default: '',
+        reauired: true
     },
     seller: {
         type: mongoose.Schema.Types.ObjectId,

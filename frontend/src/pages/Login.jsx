@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Toast from '../components/Toast';
@@ -10,7 +9,6 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { login } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -40,11 +38,17 @@ const Login = () => {
             localStorage.setItem('token', data.token); //storing the token into the local storage
 
             localStorage.setItem('user', JSON.stringify(data.user)); //storing the use data into the local storage
-            navigate('/');
+
+            // Redirect based on role
+            if (data.user.role === 'seller') {
+                navigate('/seller/dashboard');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             setError(error.message); //catches and send the error back to the user
         } finally {
-            setLoading(false); //hide the loading spinner since we dont need it anymore
+            setIsLoading(false); //hide the loading spinner since we dont need it anymore
         }
     };
 

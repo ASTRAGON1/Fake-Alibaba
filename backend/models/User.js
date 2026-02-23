@@ -18,19 +18,29 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['buyer', 'seller'],
-        default: 'buyer',
     },
+    companyName: {
+        type: String,
+        required: false,
+    },
+    phoneNumber: {
+        type: String,
+        required: false,
+    },
+    address: {
+        type: String,
+        required: false,
+    }
 }, { timestamps: true });
 
 // Hash password before saving
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
+userSchema.pre('save', async function () {
+    if (!this.isModified('password')) return;
     // if the user saves another information
     // different than the password, we don't need to hash the password
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next(); // Call next() to continue the save operation
 });
 
 // Compare password method

@@ -13,9 +13,20 @@ const registerUser = async (req, res) => {
         } else {
             const newUser = await User.create({ name, email, password, role });
 
-            const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' }); //generate token
+            const token = generateAccessToken(newUser); //generate token
 
-            res.status(201).json({ token, user: { name, email, role } })
+            res.status(201).json({
+                token,
+                user: {
+                    id: newUser._id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    role: newUser.role,
+                    companyName: newUser.companyName || '',
+                    phoneNumber: newUser.phoneNumber || '',
+                    address: newUser.address || ''
+                }
+            })
         }
 
     } catch (error) {
@@ -34,7 +45,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        const isMatch = await matchPassword(password);
+        const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid email or password' });
@@ -45,10 +56,13 @@ const loginUser = async (req, res) => {
         res.json({
             token,
             user: {
-                id: User.id,
-                email: User.email,
-                name: User.name,
-                role: User.role
+                id: user._id,
+                email: user.email,
+                name: user.name,
+                role: user.role,
+                companyName: user.companyName,
+                phoneNumber: user.phoneNumber,
+                address: user.address
             }
         });
 
@@ -58,22 +72,47 @@ const loginUser = async (req, res) => {
     }
 }
 
-const logoutUser = async (req, res) => {
-    res.status(501).json({ message: 'Not implemented yet' });
-}
 
 const getUserProfile = async (req, res) => {
     res.status(501).json({ message: 'Not implemented yet' });
 }
 
 const updateProfile = async (req, res) => {
-    res.status(501).json({ message: 'Not implemented yet' });
+
+    try {
+        const { name, email, phoneNumber, companyName, address } = req.body;
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+        } else {
+            user.name = name || user.name;
+            user.email = email || user.email;
+            user.phoneNumber = phoneNumber || user.phoneNumber;
+            user.companyName = companyName || user.companyName;
+            user.address = address || user.address;
+
+            const updateUser = await user.save();
+            res.json({
+                message: 'Profile updated successfully',
+                user: {
+                    id: updateUser._id,
+                    email: updateUser.email,
+                    name: updateUser.name,
+                    role: updateUser.role,
+                    companyName: updateUser.companyName,
+                    phoneNumber: updateUser.phoneNumber,
+                    address: updateUser.address
+                }
+            })
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser,
     getUserProfile,
     updateProfile
 };

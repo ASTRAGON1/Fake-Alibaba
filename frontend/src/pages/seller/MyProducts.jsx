@@ -3,14 +3,70 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash, FaPlus, FaEye } from 'react-icons/fa';
 import Button from '../../components/Button';
 import { formatPrice } from '../../utils/helpers';
+import { useEffect } from 'react';
 
 const MyProducts = () => {
-    // TODO: Link with backend - fetch seller products from API
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch(`http://localhost:5000/api/products/all`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
 
-    const handleDelete = (id) => {
-        // TODO: Link with backend - DELETE /api/products/:id
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+
+                const data = await response.json();
+                console.log('Products from API:', data.products);
+                setProducts(data.products);
+            } catch (error) {
+                setError(error.message);
+                console.error('Error fetching products:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchProducts();
+    }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            setLoading(true);
+            window.confirm()
+            const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete the product');
+            }
+
+            const data = await response.json();
+            setProducts(products.filter(p => p._id !== id));
+
+        } catch (error) {
+            setError(error.message);
+            console.error('Error deleting the product:', error);
+        } finally {
+            setLoading(false);
+        }
+
     };
+    if (loading) return <div className="p-12 text-center">Loading...</div>;
+    if (error) return <div className="p-12 text-center text-red-500">{error}</div>;
 
     return (
         <div className="bg-gray-50 min-h-screen p-8">
@@ -36,7 +92,7 @@ const MyProducts = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                             {products.map((product) => (
-                                <tr key={product.id} className="hover:bg-gray-50">
+                                <tr key={product._id} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="text-sm font-medium text-gray-900">{product.title}</div>
                                     </td>
@@ -52,13 +108,13 @@ const MyProducts = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
-                                        <Link to={`/products/${product.id}`} className="text-gray-400 hover:text-gray-600" title="View">
+                                        <Link to={`/products/${product._id}`} className="text-gray-400 hover:text-gray-600" title="View">
                                             <FaEye />
                                         </Link>
-                                        <Link to={`/seller/products/edit/${product.id}`} className="text-blue-500 hover:text-blue-700" title="Edit">
+                                        <Link to={`/seller/products/edit/${product._id}`} className="text-blue-500 hover:text-blue-700" title="Edit">
                                             <FaEdit />
                                         </Link>
-                                        <button onClick={() => handleDelete(product.id)} className="text-red-500 hover:text-red-700" title="Delete">
+                                        <button onClick={() => handleDelete(product._id)} className="text-red-500 hover:text-red-700" title="Delete">
                                             <FaTrash />
                                         </button>
                                     </td>
